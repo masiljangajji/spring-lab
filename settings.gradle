@@ -4,3 +4,8 @@ file('core').eachDir { dir ->
     include dir.name
     project(":${dir.name}").projectDir = dir
 }
+
+file('common').eachDir { dir ->
+    include dir.name
+    project(":${dir.name}").projectDir = dir
+}
