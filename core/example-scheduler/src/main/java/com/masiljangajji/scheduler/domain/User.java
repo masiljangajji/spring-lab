@@ -1,6 +1,6 @@
 package com.masiljangajji.scheduler.domain;
 
-import com.masiljangajji.systemcore.BaseDomain;
+import com.masiljangajji.system.core.BaseDomain;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

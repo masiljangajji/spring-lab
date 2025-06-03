@@ -1,4 +1,4 @@
-package com.masiljangajji.systemcore;
+package com.masiljangajji.system.core;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

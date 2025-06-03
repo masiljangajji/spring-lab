@@ -1,4 +1,4 @@
-package com.masiljangajji.systemcore;
+package com.masiljangajji.system.core;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
