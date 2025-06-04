@@ -3,3 +3,5 @@ scheduler:
     delete-user:
       cron: "*/15 * * * * *"   # 15초마다
       zone: "Asia/Seoul"
+      chunk-size: 3
+      strategy: simple # ← 여기 값을 "simple", "try-catch", "chunk" 중 하나로 바꾸면 그 스케줄만 동작
