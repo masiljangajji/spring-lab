@@ -3,8 +3,8 @@ package com.masiljangajji.scheduler.presentation;
 import com.masiljangajji.scheduler.application.UserService;
 import com.masiljangajji.scheduler.domain.User;
 import com.masiljangajji.scheduler.presentation.dto.UserGetResponse;
-import com.masiljangajji.scheduler.presentation.dto.UserRegisterRequest;
-import com.masiljangajji.scheduler.presentation.dto.UserRegisterResponse;
+import com.masiljangajji.scheduler.presentation.dto.UserCreateRequest;
+import com.masiljangajji.scheduler.presentation.dto.UserCreateResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +22,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserRegisterResponse> registerUser(@Valid @RequestBody UserRegisterRequest request) {
+    public ResponseEntity<UserCreateResponse> registerUser(@Valid @RequestBody UserCreateRequest request) {
 
         User user = userService.insertUser(request.name());
 
         URI location = URI.create("/users/" + user.getId());
-        return ResponseEntity.created(location).body(UserRegisterResponse.from(user));
+        return ResponseEntity.created(location).body(UserCreateResponse.from(user));
     }
 
     @GetMapping
