@@ -28,6 +28,7 @@ public class User extends BaseDomain {
 
     public void changeStatus(UserStatus status) {
         this.status = status;
+        this.setUpdatedAt();
     }
 
 }
