@@ -2,7 +2,9 @@ package com.masiljangajji.scheduler.presentation;
 
 import com.masiljangajji.scheduler.application.UserService;
 import com.masiljangajji.scheduler.domain.User;
-import com.masiljangajji.scheduler.domain.UserStatus;
+import com.masiljangajji.scheduler.presentation.dto.UserGetResponse;
+import com.masiljangajji.scheduler.presentation.dto.UserRegisterRequest;
+import com.masiljangajji.scheduler.presentation.dto.UserRegisterResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,25 +22,25 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> registerUser(@Valid @RequestBody UserRegisterRequest request) {
-        User user = User.of(request.name(), UserStatus.from(request.status()));
-        userService.insertUser(user);
+    public ResponseEntity<UserRegisterResponse> registerUser(@Valid @RequestBody UserRegisterRequest request) {
+
+        User user = userService.insertUser(request.name(), request.status());
 
         URI location = URI.create("/users/" + user.getId());
-        return ResponseEntity.created(location).body(user);
+        return ResponseEntity.created(location).body(UserRegisterResponse.from(user));
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<UserGetResponse>> getUsers() {
         List<User> users = userService.findAllUsers();
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(UserGetResponse.from(users));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUsers(@PathVariable UUID id) {
+    public ResponseEntity<UserGetResponse> getUser(@PathVariable UUID id) {
         User user = userService.findUserById(id);
         return ResponseEntity.ok()
-                .body(user);
+                .body(UserGetResponse.from(user));
     }
 
 }

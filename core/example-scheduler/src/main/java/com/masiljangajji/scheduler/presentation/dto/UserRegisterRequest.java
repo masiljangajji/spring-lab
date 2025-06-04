@@ -1,4 +1,4 @@
-package com.masiljangajji.scheduler.presentation;
+package com.masiljangajji.scheduler.presentation.dto;
 
 import lombok.NonNull;
 
