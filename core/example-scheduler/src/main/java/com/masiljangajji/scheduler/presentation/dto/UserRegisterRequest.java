@@ -1,6 +1,6 @@
 package com.masiljangajji.scheduler.presentation.dto;
 
-import lombok.NonNull;
+import jakarta.validation.constraints.NotBlank;
 
-public record UserRegisterRequest(@NonNull String name) {
+public record UserRegisterRequest(@NotBlank String name) {
 }
