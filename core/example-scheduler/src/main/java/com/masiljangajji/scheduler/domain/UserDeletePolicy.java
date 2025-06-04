@@ -13,8 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UserDeletePolicy {
 
-    private final LocalDateTime cutoff;
-
     @Bean
     @Profile("local")
     public LocalDateTime cutoff() {
