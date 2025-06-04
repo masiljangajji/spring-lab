@@ -2,13 +2,16 @@ package com.masiljangajji.scheduler.persistence;
 
 import com.masiljangajji.scheduler.domain.User;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 @Repository
 @AllArgsConstructor
 public class MemoryUserRepository implements UserRepository {
@@ -28,6 +31,20 @@ public class MemoryUserRepository implements UserRepository {
     @Override
     public User insert(User user) {
         return db.computeIfAbsent(user.getId(), k -> user);
+    }
+
+    @Override
+    public void deleteUserCreatedBefore(LocalDateTime cutOff) {
+        db.values().removeIf(user -> {
+
+            boolean expired = user.getCreatedAt().isBefore(cutOff);
+
+            if (expired) {
+                log.info("User id {} deleted - createdAt = {}", user.getId(), user.getCreatedAt());
+            }
+
+            return expired;
+        });
     }
 
 }

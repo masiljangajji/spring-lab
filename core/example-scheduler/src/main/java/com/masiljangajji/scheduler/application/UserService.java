@@ -1,6 +1,8 @@
 package com.masiljangajji.scheduler.application;
 
+import com.masiljangajji.scheduler.domain.UserDeletePolicy;
 import com.masiljangajji.scheduler.domain.User;
+import com.masiljangajji.scheduler.domain.UserStatus;
 import com.masiljangajji.scheduler.persistence.MemoryUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class UserService {
 
     private final MemoryUserRepository userRepository;
 
+    private final UserDeletePolicy userDeletePolicy;
+
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
@@ -27,8 +31,13 @@ public class UserService {
         return user;
     }
 
-    public User insertUser(User user) {
+    public User insertUser(String name, String status) {
+        User user = User.of(name, UserStatus.from(status));
         return userRepository.insert(user);
+    }
+
+    public void deleteUserByPolicy() {
+        userRepository.deleteUserCreatedBefore(userDeletePolicy.cutoff());
     }
 
 }
