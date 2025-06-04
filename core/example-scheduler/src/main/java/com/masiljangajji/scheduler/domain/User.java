@@ -15,20 +15,10 @@ public class User extends InMemoryBasedDomain {
 
     private String name;
 
-    private UserStatus status;
 
-    public String getStatus() {
-        return status.name();
-    }
-
-    public static User of(String name, UserStatus status) {
+    public static User of(String name) {
         UUID id = UUID.randomUUID();
-        return new User(id, name, status);
-    }
-
-    public void changeStatus(UserStatus status) {
-        this.status = status;
-        this.setUpdatedAt();
+        return new User(id, name);
     }
 
 }

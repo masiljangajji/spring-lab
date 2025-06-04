@@ -24,7 +24,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserRegisterResponse> registerUser(@Valid @RequestBody UserRegisterRequest request) {
 
-        User user = userService.insertUser(request.name(), request.status());
+        User user = userService.insertUser(request.name());
 
         URI location = URI.create("/users/" + user.getId());
         return ResponseEntity.created(location).body(UserRegisterResponse.from(user));
