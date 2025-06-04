@@ -1,3 +1,5 @@
 scheduler:
-  max-attempts: 3
-  delayed: 5000
+  jobs:
+    delete-user:
+      cron: "*/15 * * * * *"   # 15초마다
+      zone: "Asia/Seoul"

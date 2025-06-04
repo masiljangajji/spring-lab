@@ -17,9 +17,10 @@ public class Scheduler {
 
     private final UserService userService;
 
-    private final SchedulerProperties schedulerProperties;
-
-    @Scheduled(cron = "*/15 * * * * *", zone = "Asia/Seoul")
+    // 분산 환경일시 ShedLock 등을 통해 중복 실행 관리 가능
+    @Scheduled(
+            cron = "${scheduler.jobs.delete-user.cron}",
+            zone = "${scheduler.jobs.delete-user.zone}")
     @Retryable(
             maxAttempts = 2,
             backoff = @Backoff(delay = 5000),
