@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class InMemoryBasedDomain {
+public class BaseDomain {
 
     private final LocalDateTime createdAt = LocalDateTime.now();
 
