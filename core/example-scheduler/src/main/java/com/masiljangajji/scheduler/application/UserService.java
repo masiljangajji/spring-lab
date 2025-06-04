@@ -1,26 +1,30 @@
 package com.masiljangajji.scheduler.application;
 
 import com.masiljangajji.scheduler.domain.User;
-import com.masiljangajji.scheduler.domain.LocalUserDeletePolicy;
-import com.masiljangajji.scheduler.persistence.MemoryUserRepository;
+import com.masiljangajji.scheduler.domain.UserDeletePolicy;
+import com.masiljangajji.scheduler.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+//@Transectional 존재한다고 가정
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
-    private final MemoryUserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private final LocalUserDeletePolicy localUserDeletePolicy;
+    private final UserDeletePolicy userDeletePolicy;
 
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
+
 
     public User findUserById(UUID id) {
         User user = userRepository.findById(id);
@@ -36,7 +40,22 @@ public class UserService {
     }
 
     public void deleteUserByPolicy() {
-        userRepository.deleteUserCreatedBefore(localUserDeletePolicy.getCutoff());
+        userRepository.deleteUserCreatedBefore(userDeletePolicy.getCutoff());
+    }
+
+    public boolean deleteUserByPolicyWithTryCatch() {
+
+        try {
+            userRepository.deleteUserCreatedBefore(userDeletePolicy.getCutoff());
+        } catch (Exception e) {
+            log.error("failed deleteUserCreatedBeforeWithTryCatch - {}", e.getMessage(), e);
+            return true;
+        }
+        return false;
+    }
+
+    public void deleteUserByPolicyWithIds(List<UUID> ids) {
+        userRepository.deleteUserByIds(ids);
     }
 
 }

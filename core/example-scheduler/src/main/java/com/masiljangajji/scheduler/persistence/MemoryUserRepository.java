@@ -24,6 +24,14 @@ public class MemoryUserRepository implements UserRepository {
     }
 
     @Override
+    public List<UUID> findAllUserIdsByPolicy(LocalDateTime cutoff) {
+        return db.values().stream()
+                .filter(user -> user.getCreatedAt().isBefore(cutoff))
+                .map(User::getId)
+                .toList();
+    }
+
+    @Override
     public User findById(UUID id) {
         return db.get(id);
     }
@@ -41,11 +49,26 @@ public class MemoryUserRepository implements UserRepository {
             boolean expired = user.getCreatedAt().isBefore(cutoff);
 
             if (expired) {
-                log.info("User id {} deleted - createdAt = {}", user.getId(), user.getCreatedAt());
+                deleteUserLog(user.getId(), user.getCreatedAt());
             }
 
             return expired;
         });
+    }
+
+    @Override
+    public void deleteUserByIds(List<UUID> ids) {
+        db.values().removeIf(user -> {
+            if (ids.contains(user.getId())) {
+                deleteUserLog(user.getId(), user.getCreatedAt());
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private void deleteUserLog(UUID id, LocalDateTime createdAt) {
+        log.info("User id {} deleted - createdAt = {}", id, createdAt);
     }
 
 }

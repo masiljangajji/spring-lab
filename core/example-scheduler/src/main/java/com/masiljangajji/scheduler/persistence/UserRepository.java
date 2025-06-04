@@ -10,10 +10,14 @@ public interface UserRepository {
 
     List<User> findAll();
 
+    List<UUID> findAllUserIdsByPolicy(LocalDateTime cutoff);
+
     User findById(UUID id);
 
     User insert(User user);
 
-    void deleteUserCreatedBefore(LocalDateTime cutOff);
+    void deleteUserCreatedBefore(LocalDateTime cutoff);
+
+    void deleteUserByIds(List<UUID> ids);
 
 }
