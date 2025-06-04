@@ -1,0 +1,3 @@
+scheduler:
+  max-attempts: 3
+  delayed: 5000
