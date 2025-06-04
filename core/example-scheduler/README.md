@@ -10,11 +10,14 @@
 
 다음의 경우에 대해서 다룹니다.
 
-1. `Scheduler` 실패시 `deleteUserCreatedBeforeJob` 재실행, @Transectional 로 인해 롤백시 전체를 재시도
-2. `TryCatch Scheduler` 실패시 `deleteUserCreatedBeforeJobWithTryCatch` 재실행
+1. `Scheduler` 
+    - 실패시 `deleteUserCreatedBeforeJob` 재실행, @Transectional 로 인해 롤백시 전체를 재시도
+2. `TryCatch Scheduler` 
+    - 실패시 `deleteUserCreatedBeforeJobWithTryCatch` 재실행
     - 여러개의 쿼리를 보내는 경우 Ex) JPA DeleteAll, Service 로직을 try-catch 로 감싸 커밋 후 처리 -> 실패하는 지점부터 재시도 가능 함
     - 하지만 벌크작업(하나의 쿼리)의 경우에는 여전히 전체가 재시도 됨
-3. `Chunk Scheduler` 실패시 `deleteUserCreatedBeforeJobWithChunks` 재실행
+3. `Chunk Scheduler` 
+    - 실패시 `deleteUserCreatedBeforeJobWithChunks` 재실행
     - 벌크작업(하나의 쿼리)에 대해 청크를 나눔으로써 작업을 분산 -> 실패하는 지점부터 재시도
     - 여러개의 쿼리를 날리지만 작업이 청크 단위로 묶임으로서 보다 효율적
     - 삭제가 필요한 ids 를 메모리에 저장해야 되기 때문에 메모리에 부담이 생김
