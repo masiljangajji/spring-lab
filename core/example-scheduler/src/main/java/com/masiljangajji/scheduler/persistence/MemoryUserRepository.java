@@ -34,10 +34,11 @@ public class MemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public void deleteUserCreatedBefore(LocalDateTime cutOff) {
+    public void deleteUserCreatedBefore(LocalDateTime cutoff) {
+
         db.values().removeIf(user -> {
 
-            boolean expired = user.getCreatedAt().isBefore(cutOff);
+            boolean expired = user.getCreatedAt().isBefore(cutoff);
 
             if (expired) {
                 log.info("User id {} deleted - createdAt = {}", user.getId(), user.getCreatedAt());
