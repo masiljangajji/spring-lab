@@ -25,6 +25,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<UUID> findAllIdsByPolicy() {
+        return userRepository.findAllUserIdsByPolicy(userDeletePolicy.getCutoff());
+    }
 
     public User findUserById(UUID id) {
         User user = userRepository.findById(id);
