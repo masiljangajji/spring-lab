@@ -3,6 +3,7 @@ package com.masiljangajji.scheduler.persistence;
 import com.masiljangajji.scheduler.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Repository
+@Profile("local")
 @AllArgsConstructor
 public class MemoryUserRepository implements UserRepository {
 
