@@ -1,9 +1,0 @@
-package com.masiljangajji.system.core;
-
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
-@ComponentScan(basePackages = "com.masiljangajji")
-public class PropertyConfig {
-}
