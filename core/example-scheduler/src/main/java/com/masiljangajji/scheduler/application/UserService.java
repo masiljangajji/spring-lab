@@ -1,7 +1,7 @@
 package com.masiljangajji.scheduler.application;
 
-import com.masiljangajji.scheduler.domain.UserDeletePolicy;
 import com.masiljangajji.scheduler.domain.User;
+import com.masiljangajji.scheduler.domain.LocalUserDeletePolicy;
 import com.masiljangajji.scheduler.domain.UserStatus;
 import com.masiljangajji.scheduler.persistence.MemoryUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class UserService {
 
     private final MemoryUserRepository userRepository;
 
-    private final UserDeletePolicy userDeletePolicy;
+    private final LocalUserDeletePolicy localUserDeletePolicy;
 
     public List<User> findAllUsers() {
         return userRepository.findAll();
@@ -37,7 +37,7 @@ public class UserService {
     }
 
     public void deleteUserByPolicy() {
-        userRepository.deleteUserCreatedBefore(userDeletePolicy.cutoff());
+        userRepository.deleteUserCreatedBefore(localUserDeletePolicy.getCutoff());
     }
 
 }
