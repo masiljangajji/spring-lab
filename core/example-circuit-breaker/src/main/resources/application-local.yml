@@ -1,0 +1,10 @@
+resilience4j:
+  circuitbreaker:
+    instances:
+      local:
+        failure-rate-threshold: 20                # 실패율 20% 넘으면 Open
+        sliding-window-size: 10                   # 최근 10건 기준
+        minimum-number-of-calls: 5                # 최소 5회 호출 이후 평가 시작
+        wait-duration-in-open-state: 5s           # Open 상태 유지 시간
+        permitted-number-of-calls-in-half-open-state: 1 # Half-Open 상태에서 허용할 테스트 호출 수 (외부 시스템이 복구되었을 수 있으니, 테스트)
+        automatic-transition-from-open-to-half-open-enabled: true # Open 상태에서 자동으로 Half-Open 전환
