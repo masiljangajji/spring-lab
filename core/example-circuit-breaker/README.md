@@ -1,8 +1,8 @@
 ## 시나리오
 
-1. api 는 특정 확률로 실패
-2. 상태를 확인하며, 설정 값이 적용됐는지 확인
-3. OPEN, CLOSE, HALF-OPEN 상태에따른 응답 값 확인
+1. API는 일정 확률로 실패합니다.
+2. 설정 값이 제대로 적용되었는지 상태를 확인합니다.
+3. OPEN, CLOSE, HALF-OPEN 상태에 따른 응답 값을 확인합니다.
 
 <!-- This is an auto-generated comment: release notes by coderabbit.ai -->
 
@@ -19,8 +19,6 @@
 
 <!-- end of auto-generated comment: release notes by coderabbit.ai -->
 
-
-
 ```mermaid
 sequenceDiagram
     participant Client
@@ -29,25 +27,23 @@ sequenceDiagram
     participant ResultTracker
     participant CircuitBreaker (Resilience4j)
     participant CircuitBreakerStatusService
-
-    Client->>ApiController: GET /api/call
-    ApiController->>FaultyService: call()
-    FaultyService->>CircuitBreaker: (AOP) Circuit Breaker "local" 적용
+    Client ->> ApiController: GET /api/call
+    ApiController ->> FaultyService: call()
+    FaultyService ->> CircuitBreaker: (AOP) Circuit Breaker "local" 적용
     alt 성공 (50%)
-        FaultyService->>ResultTracker: incrementSuccessCount()
-        FaultyService-->>ApiController: "성공" 메시지 반환
+        FaultyService ->> ResultTracker: incrementSuccessCount()
+        FaultyService -->> ApiController: "성공" 메시지 반환
     else 실패 (50%)
-        FaultyService->>ResultTracker: incrementFailCount()
-        FaultyService-->>FaultyService: ExceptionWithFailCount 발생
-        FaultyService->>FaultyService: fallBack(Throwable t) 호출
-        FaultyService-->>ApiController: fallback 메시지 반환
+        FaultyService ->> ResultTracker: incrementFailCount()
+        FaultyService -->> FaultyService: ExceptionWithFailCount 발생
+        FaultyService ->> FaultyService: fallBack(Throwable t) 호출
+        FaultyService -->> ApiController: fallback 메시지 반환
     end
-    ApiController-->>Client: 결과 반환
-
-    Client->>ApiController: GET /api/status?circuitBreakerName=local
-    ApiController->>CircuitBreakerStatusService: getStatus(name)
-    CircuitBreakerStatusService->>CircuitBreaker: 상태 조회
-    CircuitBreaker-->>CircuitBreakerStatusService: 상태 반환
-    CircuitBreakerStatusService-->>ApiController: 상태 문자열 반환
-    ApiController-->>Client: 상태 메시지 반환
+    ApiController -->> Client: 결과 반환
+    Client ->> ApiController: GET /api/status?circuitBreakerName=local
+    ApiController ->> CircuitBreakerStatusService: getStatus(name)
+    CircuitBreakerStatusService ->> CircuitBreaker: 상태 조회
+    CircuitBreaker -->> CircuitBreakerStatusService: 상태 반환
+    CircuitBreakerStatusService -->> ApiController: 상태 문자열 반환
+    ApiController -->> Client: 상태 메시지 반환
 ```
