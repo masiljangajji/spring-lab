@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: circuit_breaker
+  profiles:
+    active: local
