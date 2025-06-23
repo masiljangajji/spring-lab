@@ -1,6 +1,6 @@
 package com.masiljangajji.circuit_breaker.application;
 
-import com.masiljangajji.circuit_breaker.exception.ExceptionWIthFailCount;
+import com.masiljangajji.circuit_breaker.exception.ExceptionWithFailCount;
 import com.masiljangajji.circuit_breaker.domain.ResultTracker;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class FaultyService {
     public String call() {
         if (ThreadLocalRandom.current().nextInt(10) < 5) { // 성공확률 50%
             resultTracker.incrementFailCount();
-            throw new ExceptionWIthFailCount(resultTracker.getFailCount());
+            throw new ExceptionWithFailCount(resultTracker.getFailCount());
         }
         resultTracker.incrementSuccessCount();
         return String.format("성공했습니다 %d", resultTracker.getSuccessCount());
