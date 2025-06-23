@@ -18,3 +18,36 @@
     - 회로 차단기 이름이 유효하지 않거나 존재하지 않을 때 사용자 정의 예외가 반환됩니다.
 
 <!-- end of auto-generated comment: release notes by coderabbit.ai -->
+
+
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant ApiController
+    participant FaultyService
+    participant ResultTracker
+    participant CircuitBreaker (Resilience4j)
+    participant CircuitBreakerStatusService
+
+    Client->>ApiController: GET /api/call
+    ApiController->>FaultyService: call()
+    FaultyService->>CircuitBreaker: (AOP) Circuit Breaker "local" 적용
+    alt 성공 (50%)
+        FaultyService->>ResultTracker: incrementSuccessCount()
+        FaultyService-->>ApiController: "성공" 메시지 반환
+    else 실패 (50%)
+        FaultyService->>ResultTracker: incrementFailCount()
+        FaultyService-->>FaultyService: ExceptionWithFailCount 발생
+        FaultyService->>FaultyService: fallBack(Throwable t) 호출
+        FaultyService-->>ApiController: fallback 메시지 반환
+    end
+    ApiController-->>Client: 결과 반환
+
+    Client->>ApiController: GET /api/status?circuitBreakerName=local
+    ApiController->>CircuitBreakerStatusService: getStatus(name)
+    CircuitBreakerStatusService->>CircuitBreaker: 상태 조회
+    CircuitBreaker-->>CircuitBreakerStatusService: 상태 반환
+    CircuitBreakerStatusService-->>ApiController: 상태 문자열 반환
+    ApiController-->>Client: 상태 메시지 반환
+```
