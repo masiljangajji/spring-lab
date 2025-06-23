@@ -25,6 +25,11 @@ public class ResultTracker {
 
     public double getFailureRate() {
         int total = getTotalAttempts();
+
+        if (total == 0) {
+            return 0.0;
+        }
+
         return (double) failCount / total * 100;
     }
 
