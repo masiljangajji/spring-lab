@@ -1,6 +1,7 @@
-
+# 다른 프로젝트와 통합될 예정입니다. (2025/08/20)
 
 ## 어렵게 배워서 쉽게 쓰고싶은 자바/스프링
+
 
 ### 왜 만들었나요?
 
@@ -21,3 +22,4 @@
 
 1. [Spring Scheduler Example](https://github.com/masiljangajji/spring-lab/issues/3)
 2. [Circuit Breaker Example](https://github.com/masiljangajji/spring-lab/issues/4)
+
