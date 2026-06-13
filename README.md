@@ -1,4 +1,6 @@
-# [Dawn-Cs-Study](https://github.com/orgs/dawn-cs-study/projects/2?pane=issue&itemId=124965576&issue=dawn-cs-study%7CETC%7C1) 프로젝트와 통합될 예정입니다. (2025/08/20)
+- 2026/06/13 추가
+취업을 하게되면서 해당 프로젝트가 접혔습니다.
+2026년안에 다른 방향과 비슷한 방법론으로 컨텐츠를 만들고 싶다는 생각을 합니다. 
 
 
 ## 어렵게 배워서 쉽게 쓰고싶은 자바/스프링
